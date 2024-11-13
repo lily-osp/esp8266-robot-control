@@ -165,53 +165,39 @@ The web interface provides buttons and controls for the following actions:
 
 ### Control Commands
 
-#### Body Movement
-- `mv` - Move forward
-- `bk` - Move backward
-- `lt` - Turn left
-- `rt` - Turn right
-- `rl` - Rotate left
-- `rr` - Rotate right
-- `st` - Stop
-- `spd X` - Set speed (X: 0-255)
+Here’s the completed table with example usage for each command:
 
-#### Arm Movement
-- `b +/-` - Base rotation
-- `s +/-` - Shoulder movement
-- `e +/-` - Elbow movement
-- `g o/c` - Gripper open/close
+| Category             | Command      | Description                          | Example Usage                                       |
+|----------------------|--------------|--------------------------------------|-----------------------------------------------------|
+| **Body Movement**    | `mv`         | Move forward                         | `http://<esp_ip>/command?cmd=mv`                    |
+|                      | `bk`         | Move backward                        | `http://<esp_ip>/command?cmd=bk`                    |
+|                      | `lt`         | Turn left                            | `http://<esp_ip>/command?cmd=lt`                    |
+|                      | `rt`         | Turn right                           | `http://<esp_ip>/command?cmd=rt`                    |
+|                      | `rl`         | Rotate left                          | `http://<esp_ip>/command?cmd=rl`                    |
+|                      | `rr`         | Rotate right                         | `http://<esp_ip>/command?cmd=rr`                    |
+|                      | `st`         | Stop                                 | `http://<esp_ip>/command?cmd=st`                    |
+|                      | `spd X`      | Set speed (X: 0-255)                 | `http://<esp_ip>/command?cmd=spd 150`               |
+| **Arm Movement**     | `b +/-`      | Base rotation                        | `http://<esp_ip>/command?cmd=b +` or `cmd=b -`      |
+|                      | `s +/-`      | Shoulder movement                    | `http://<esp_ip>/command?cmd=s +` or `cmd=s -`      |
+|                      | `e +/-`      | Elbow movement                       | `http://<esp_ip>/command?cmd=e +` or `cmd=e -`      |
+|                      | `g o/c`      | Gripper open (`o`) / close (`c`)     | `http://<esp_ip>/command?cmd=g o` or `cmd=g c`      |
+| **Pre-defined Movements** | `m h`   | Home position                        | `http://<esp_ip>/command?cmd=m h`                   |
+|                      | `m s`        | Scan position                        | `http://<esp_ip>/command?cmd=m s`                   |
+|                      | `m p`        | Pick object                          | `http://<esp_ip>/command?cmd=m p`                   |
+|                      | `m d`        | Drop object                          | `http://<esp_ip>/command?cmd=m d`                   |
+|                      | `m w`        | Wave                                 | `http://<esp_ip>/command?cmd=m w`                   |
+| **Position Memory**  | `m pos X`    | Save position (X: 1-3)               | `http://<esp_ip>/command?cmd=m pos 1`               |
+|                      | `m save X`   | Load position (X: 1-3)               | `http://<esp_ip>/command?cmd=m save 1`              |
+| **Recording**        | `stream`     | Start recording                      | `http://<esp_ip>/command?cmd=stream`                |
+|                      | `done`       | Stop recording                       | `http://<esp_ip>/command?cmd=done`                  |
+|                      | `play`       | Play recording                       | `http://<esp_ip>/command?cmd=play`                  |
+|                      | `clear`      | Clear recording                      | `http://<esp_ip>/command?cmd=clear`                 |
 
-#### Pre-defined Movements
-- `m h` - Home position
-- `m s` - Scan position
-- `m p` - Pick object
-- `m d` - Drop object
-- `m w` - Wave
+### Additional Examples
 
-#### Position Memory
-- `m pos X` - Save position (X: 1-3)
-- `m save X` - Load position (X: 1-3)
-
-#### Recording
-- `stream` - Start recording
-- `done` - Stop recording
-- `play` - Play recording
-- `clear` - Clear recording
-
-### Example Commands
-
-- Move the robot forward:
-  ```
-  http://<esp_ip>/command?cmd=mv
-  ```
-- Set motor speed to 150:
-  ```
-  http://<esp_ip>/command?cmd=spd 150
-  ```
-- Start obstacle avoidance:
-  ```
-  http://<esp_ip>/command?cmd=oa on
-  ```
+- **Move the robot forward**: `http://<esp_ip>/command?cmd=mv`
+- **Set motor speed to 150**: `http://<esp_ip>/command?cmd=spd 150`
+- **obstacle avoidance**: `http://<esp_ip>/command?cmd=oa on` or `cmd=oa off` or `cmd=oa nav`
 
 ## User Interface
 
