@@ -11,18 +11,18 @@ const char* ssid = "SSID";
 const char* password = "password";
 
 // pin definitions for ESP8266
-const uint8_t MOTOR1_IN1 = D1;  // GPIO5
-const uint8_t MOTOR1_IN2 = D2;  // GPIO4
-const uint8_t MOTOR2_IN1 = D3;  // GPIO0
-const uint8_t MOTOR2_IN2 = D4;  // GPIO2
-const uint8_t MOTOR1_ENA = D5;  // PWM capable    
-const uint8_t MOTOR2_ENB = D6;  // PWM capable
-const uint8_t TRIG_PIN = D7;    // GPIO13
-const uint8_t ECHO_PIN = D8;    // GPIO15
-const uint8_t BASE_PIN = D0;    // GPIO16
-const uint8_t SHOULDER_PIN = D9; // GPIO3
-const uint8_t ELBOW_PIN = D10;  // GPIO1
-const uint8_t GRIPPER_PIN = D11; // GPIO9
+const uint8_t MOTOR1_IN1 = 5;  // GPIO5
+const uint8_t MOTOR1_IN2 = 4;  // GPIO4
+const uint8_t MOTOR2_IN1 = 0;  // GPIO0
+const uint8_t MOTOR2_IN2 = 2;  // GPIO2
+const uint8_t MOTOR1_ENA = 14; // GPIO14 (PWM capable)
+const uint8_t MOTOR2_ENB = 12; // GPIO12 (PWM capable)
+const uint8_t TRIG_PIN = 13;   // GPIO13
+const uint8_t ECHO_PIN = 15;   // GPIO15
+const uint8_t BASE_PIN = 16;   // GPIO16
+const uint8_t SHOULDER_PIN = 3; // GPIO3 (RX)
+const uint8_t ELBOW_PIN = 1;   // GPIO1 (TX)
+const uint8_t GRIPPER_PIN = 9; // GPIO9 (flash)
 
 // Initialize objects
 MotorController motors(MOTOR1_IN1, MOTOR1_IN2, MOTOR2_IN1, MOTOR2_IN2, MOTOR1_ENA, MOTOR2_ENB);

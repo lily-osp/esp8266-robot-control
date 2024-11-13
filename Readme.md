@@ -59,32 +59,36 @@ Below is the ESP8266 GPIO pin setup for controlling motors, ultrasonic sensor, a
 
 ### Motor Controller Pins
 
-| Component         | ESP8266 Pin | GPIO   | Description                      |
-|-------------------|-------------|--------|----------------------------------|
-| Motor 1 IN1       | D1          | GPIO5  | Motor 1 Direction Control Pin 1  |
-| Motor 1 IN2       | D2          | GPIO4  | Motor 1 Direction Control Pin 2  |
-| Motor 2 IN1       | D3          | GPIO0  | Motor 2 Direction Control Pin 1  |
-| Motor 2 IN2       | D4          | GPIO2  | Motor 2 Direction Control Pin 2  |
-| Motor 1 Enable (ENA) | D5       | GPIO14 | PWM pin for Motor 1 speed control |
-| Motor 2 Enable (ENB) | D6       | GPIO12 | PWM pin for Motor 2 speed control |
+| Component             | ESP8266 Pin | GPIO   | Description                           |
+|-----------------------|-------------|--------|---------------------------------------|
+| Motor 1 IN1           | D1          | GPIO5  | Motor 1 Direction Control Pin 1       |
+| Motor 1 IN2           | D2          | GPIO4  | Motor 1 Direction Control Pin 2       |
+| Motor 2 IN1           | D3          | GPIO0  | Motor 2 Direction Control Pin 1       |
+| Motor 2 IN2           | D4          | GPIO2  | Motor 2 Direction Control Pin 2       |
+| Motor 1 Enable (ENA)  | D5          | GPIO14 | PWM pin for Motor 1 speed control     |
+| Motor 2 Enable (ENB)  | D6          | GPIO12 | PWM pin for Motor 2 speed control     |
 
 ### Ultrasonic Sensor Pins
 
-| Component      | ESP8266 Pin | GPIO   | Description            |
-|----------------|-------------|--------|------------------------|
-| Trigger Pin    | D7          | GPIO13 | Trigger for distance measurement |
-| Echo Pin       | D8          | GPIO15 | Echo to receive distance |
+| Component             | ESP8266 Pin | GPIO   | Description                           |
+|-----------------------|-------------|--------|---------------------------------------|
+| Trigger Pin           | D7          | GPIO13 | Trigger for distance measurement      |
+| Echo Pin              | D8          | GPIO15 | Echo to receive distance              |
 
 ### Robot Arm Pins
 
-| Component           | ESP8266 Pin | GPIO   | Description                        |
-|---------------------|-------------|--------|------------------------------------|
-| Base Servo          | D0          | GPIO16 | Base rotation control              |
-| Shoulder Servo      | D9          | GPIO3  | Shoulder joint control             |
-| Elbow Servo         | D10         | GPIO1  | Elbow joint control                |
-| Gripper Servo       | D11         | GPIO9  | Gripper open/close control         |
+| Component             | ESP8266 Pin | GPIO   | Description                           |
+|-----------------------|-------------|--------|---------------------------------------|
+| Base Servo            | D0          | GPIO16 | Base rotation control                 |
+| Shoulder Servo        | RX          | GPIO3  | Shoulder joint control (ESP8266 RX)   |
+| Elbow Servo           | TX          | GPIO1  | Elbow joint control (ESP8266 TX)      |
+| Gripper Servo         | Flash       | GPIO9  | Gripper open/close control            |
 
 **Note**: Pins D9, D10, and D11 are UART-related, so ensure no interference with Serial if using debugging output.
+
+#### GPIO images
+
+![GPIO Table](pinout.png)
 
 ## Software Requirements
 
@@ -144,6 +148,16 @@ The web interface provides buttons and controls for the following actions:
   - `m pos [number]`: Save current position as a specific number.
   - `m save [number]`: Move to a saved position.
   - `m [action]`: Perform predefined actions, e.g., `home`, `scan`, `pick`, `drop`, `wave`, etc.
+
+### UI preview
+
+<div align="center">
+  <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+    <img src="01.png" alt="Body Control Interface" width="400" title="Body Control Tab"/>
+    <img src="02.png" alt="Arm Control Interface" width="400" title="Arm Control Tab"/>
+  </div>
+  <p><em>Left: Body Control Interface - Right: Arm Control Interface</em></p>
+</div>
 
 ### Control Commands
 
