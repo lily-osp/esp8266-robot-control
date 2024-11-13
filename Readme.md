@@ -239,4 +239,4 @@ The interface features a modern, retro-styled design with:
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
