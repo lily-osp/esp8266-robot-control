@@ -55,36 +55,40 @@ This project enables control of a robot with obstacle avoidance and a robot arm 
 
 ## Pin Configuration
 
-Below is the ESP8266 GPIO pin setup for controlling motors, ultrasonic sensor, and robot arm.
+Below is the ESP8266 GPIO setup for controlling motors, an ultrasonic sensor, and a robot arm. This includes alternative pin aliases often found on NodeMCU boards, such as `SD2`, `SD3`, `SD_CLK`, and `SD_CMD`.
 
 ### Motor Controller Pins
 
-| Component             | ESP8266 Pin | GPIO   | Description                           |
-|-----------------------|-------------|--------|---------------------------------------|
-| Motor 1 IN1           | D1          | GPIO5  | Motor 1 Direction Control Pin 1       |
-| Motor 1 IN2           | D2          | GPIO4  | Motor 1 Direction Control Pin 2       |
-| Motor 2 IN1           | D3          | GPIO0  | Motor 2 Direction Control Pin 1       |
-| Motor 2 IN2           | D4          | GPIO2  | Motor 2 Direction Control Pin 2       |
-| Motor 1 Enable (ENA)  | D5          | GPIO14 | PWM pin for Motor 1 speed control     |
-| Motor 2 Enable (ENB)  | D6          | GPIO12 | PWM pin for Motor 2 speed control     |
+| Component             | Board Pin | GPIO   | NodeMCU Alias | Description                           |
+|-----------------------|-----------|--------|---------------|---------------------------------------|
+| Motor 1 IN1           | D1        | GPIO5  | D1            | Motor 1 Direction Control Pin 1       |
+| Motor 1 IN2           | D2        | GPIO4  | D2            | Motor 1 Direction Control Pin 2       |
+| Motor 2 IN1           | D3        | GPIO0  | D3            | Motor 2 Direction Control Pin 1       |
+| Motor 2 IN2           | D4        | GPIO2  | D4            | Motor 2 Direction Control Pin 2       |
+| Motor 1 Enable (ENA)  | D5        | GPIO14 | D5            | PWM pin for Motor 1 speed control     |
+| Motor 2 Enable (ENB)  | D6        | GPIO12 | D6            | PWM pin for Motor 2 speed control     |
 
 ### Ultrasonic Sensor Pins
 
-| Component             | ESP8266 Pin | GPIO   | Description                           |
-|-----------------------|-------------|--------|---------------------------------------|
-| Trigger Pin           | D7          | GPIO13 | Trigger for distance measurement      |
-| Echo Pin              | D8          | GPIO15 | Echo to receive distance              |
+| Component             | Board Pin | GPIO   | NodeMCU Alias | Description                           |
+|-----------------------|-----------|--------|---------------|---------------------------------------|
+| Trigger Pin           | D7        | GPIO13 | D7            | Trigger for distance measurement      |
+| Echo Pin              | D8        | GPIO15 | D8            | Echo to receive distance              |
 
 ### Robot Arm Pins
 
-| Component             | ESP8266 Pin | GPIO   | Description                           |
-|-----------------------|-------------|--------|---------------------------------------|
-| Base Servo            | D0          | GPIO16 | Base rotation control                 |
-| Shoulder Servo        | RX          | GPIO3  | Shoulder joint control (ESP8266 RX)   |
-| Elbow Servo           | TX          | GPIO1  | Elbow joint control (ESP8266 TX)      |
-| Gripper Servo         | Flash       | GPIO9  | Gripper open/close control            |
+| Component             | Board Pin | GPIO   | NodeMCU Alias | Description                           |
+|-----------------------|-----------|--------|---------------|---------------------------------------|
+| Base Servo            | D0        | GPIO16 | D0            | Base rotation control                 |
+| Shoulder Servo        | RX        | GPIO3  | RX            | Shoulder joint control (ESP8266 RX)   |
+| Elbow Servo           | TX        | GPIO1  | TX            | Elbow joint control (ESP8266 TX)      |
+| Gripper Servo         | Flash     | GPIO9  | SD2           | Gripper open/close control            |
 
-**Note**: Pins D9, D10, and D11 are UART-related, so ensure no interference with Serial if using debugging output.
+**Additional Pins and Notes:**
+- **SD2 (GPIO9)** and **SD3 (GPIO10)** are typically connected to the flash memory. Use them with caution, as these can interfere with flash operations.
+- **SD_CLK (GPIO6)**, **SD_CMD (GPIO11)**, **SD_DATA0-3 (GPIO7-10)**: Reserved for internal flash operations on most boards, so avoid using these for general I/O.
+
+**Note**: UART pins (D9, D10, D11) are used for serial communication, which might conflict with debugging output if connected to other peripherals.
 
 #### GPIO images
 
