@@ -82,7 +82,7 @@ Below is the ESP8266 GPIO setup for controlling motors, an ultrasonic sensor, an
 | Base Servo            | D0        | GPIO16 | D0            | Base rotation control                 |
 | Shoulder Servo        | RX        | GPIO3  | RX            | Shoulder joint control (ESP8266 RX)   |
 | Elbow Servo           | TX        | GPIO1  | TX            | Elbow joint control (ESP8266 TX)      |
-| Gripper Servo         | Flash     | GPIO9  | SD2           | Gripper open/close control            |
+| Gripper Servo         | Flash     | GPIO9  | SD2 / S2      | Gripper open/close control            |
 
 **Additional Pins and Notes:**
 - **SD2 (GPIO9)** and **SD3 (GPIO10)** are typically connected to the flash memory. Use them with caution, as these can interfere with flash operations.
@@ -177,27 +177,24 @@ Here’s the completed table with example usage for each command:
 |                      | `rr`         | Rotate right                         | `http://<esp_ip>/command?cmd=rr`                    |
 |                      | `st`         | Stop                                 | `http://<esp_ip>/command?cmd=st`                    |
 |                      | `spd X`      | Set speed (X: 0-255)                 | `http://<esp_ip>/command?cmd=spd 150`               |
-| **Arm Movement**     | `b +/-`      | Base rotation                        | `http://<esp_ip>/command?cmd=b +` or `cmd=b -`      |
-|                      | `s +/-`      | Shoulder movement                    | `http://<esp_ip>/command?cmd=s +` or `cmd=s -`      |
-|                      | `e +/-`      | Elbow movement                       | `http://<esp_ip>/command?cmd=e +` or `cmd=e -`      |
-|                      | `g o/c`      | Gripper open (`o`) / close (`c`)     | `http://<esp_ip>/command?cmd=g o` or `cmd=g c`      |
-| **Pre-defined Movements** | `m h`   | Home position                        | `http://<esp_ip>/command?cmd=m h`                   |
-|                      | `m s`        | Scan position                        | `http://<esp_ip>/command?cmd=m s`                   |
-|                      | `m p`        | Pick object                          | `http://<esp_ip>/command?cmd=m p`                   |
-|                      | `m d`        | Drop object                          | `http://<esp_ip>/command?cmd=m d`                   |
-|                      | `m w`        | Wave                                 | `http://<esp_ip>/command?cmd=m w`                   |
-| **Position Memory**  | `m pos X`    | Save position (X: 1-3)               | `http://<esp_ip>/command?cmd=m pos 1`               |
-|                      | `m save X`   | Load position (X: 1-3)               | `http://<esp_ip>/command?cmd=m save 1`              |
+| **Arm Movement**     | `b +/-`      | Base rotation                        | `http://<esp_ip>/command?cmd=b%20+` or `cmd=b%20-`  |
+|                      | `s +/-`      | Shoulder movement                    | `http://<esp_ip>/command?cmd=s%20+` or `cmd=s%20-`  |
+|                      | `e +/-`      | Elbow movement                       | `http://<esp_ip>/command?cmd=e%20+` or `cmd=e%20-`  |
+|                      | `g o/c`      | Gripper open (`o`) / close (`c`)     | `http://<esp_ip>/command?cmd=g%20o` or `cmd=g%20c`  |
+| **Pre-defined Movements** | `m h`   | Home position                        | `http://<esp_ip>/command?cmd=m%20h`                 |
+|                      | `m s`        | Scan position                        | `http://<esp_ip>/command?cmd=m%20s`                 |
+|                      | `m p`        | Pick object                          | `http://<esp_ip>/command?cmd=m%20p`                 |
+|                      | `m d`        | Drop object                          | `http://<esp_ip>/command?cmd=m%20d`                 |
+|                      | `m w`        | Wave                                 | `http://<esp_ip>/command?cmd=m%20w`                 |
+| **Position Memory**  | `m pos X`    | Save position (X: 1-3)               | `http://<esp_ip>/command?cmd=m%20pos%201`           |
+|                      | `m save X`   | Load position (X: 1-3)               | `http://<esp_ip>/command?cmd=m%20save%201`          |
 | **Recording**        | `stream`     | Start recording                      | `http://<esp_ip>/command?cmd=stream`                |
 |                      | `done`       | Stop recording                       | `http://<esp_ip>/command?cmd=done`                  |
 |                      | `play`       | Play recording                       | `http://<esp_ip>/command?cmd=play`                  |
 |                      | `clear`      | Clear recording                      | `http://<esp_ip>/command?cmd=clear`                 |
-
-### Additional Examples
-
-- **Move the robot forward**: `http://<esp_ip>/command?cmd=mv`
-- **Set motor speed to 150**: `http://<esp_ip>/command?cmd=spd 150`
-- **obstacle avoidance**: `http://<esp_ip>/command?cmd=oa on` or `cmd=oa off` or `cmd=oa nav`
+| **Obstacle Avoidance** | `oa on`    | Enable OA                            | `http://<esp_ip>/command?cmd=oa%20on`               |
+|                      | `oa off`     | Desable OA                           | `http://<esp_ip>/command?cmd=oa%20off`              |
+|                      | `oa nav`     | Auto navigation using OA             | `http://<esp_ip>/command?cmd=oa%20nav`              |
 
 ## User Interface
 
