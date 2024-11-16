@@ -167,34 +167,34 @@ The web interface provides buttons and controls for the following actions:
 
 Here’s the completed table with example usage for each command:
 
-| Category             | Command      | Description                          | Example Usage                                       |
-|----------------------|--------------|--------------------------------------|-----------------------------------------------------|
-| **Body Movement**    | `mv`         | Move forward                         | `http://<esp_ip>/command?cmd=mv`                    |
-|                      | `bk`         | Move backward                        | `http://<esp_ip>/command?cmd=bk`                    |
-|                      | `lt`         | Turn left                            | `http://<esp_ip>/command?cmd=lt`                    |
-|                      | `rt`         | Turn right                           | `http://<esp_ip>/command?cmd=rt`                    |
-|                      | `rl`         | Rotate left                          | `http://<esp_ip>/command?cmd=rl`                    |
-|                      | `rr`         | Rotate right                         | `http://<esp_ip>/command?cmd=rr`                    |
-|                      | `st`         | Stop                                 | `http://<esp_ip>/command?cmd=st`                    |
-|                      | `spd X`      | Set speed (X: 0-255)                 | `http://<esp_ip>/command?cmd=spd 150`               |
-| **Arm Movement**     | `b +/-`      | Base rotation                        | `http://<esp_ip>/command?cmd=b%20+` or `cmd=b%20-`  |
-|                      | `s +/-`      | Shoulder movement                    | `http://<esp_ip>/command?cmd=s%20+` or `cmd=s%20-`  |
-|                      | `e +/-`      | Elbow movement                       | `http://<esp_ip>/command?cmd=e%20+` or `cmd=e%20-`  |
-|                      | `g o/c`      | Gripper open (`o`) / close (`c`)     | `http://<esp_ip>/command?cmd=g%20o` or `cmd=g%20c`  |
-| **Pre-defined Movements** | `m h`   | Home position                        | `http://<esp_ip>/command?cmd=m%20h`                 |
-|                      | `m s`        | Scan position                        | `http://<esp_ip>/command?cmd=m%20s`                 |
-|                      | `m p`        | Pick object                          | `http://<esp_ip>/command?cmd=m%20p`                 |
-|                      | `m d`        | Drop object                          | `http://<esp_ip>/command?cmd=m%20d`                 |
-|                      | `m w`        | Wave                                 | `http://<esp_ip>/command?cmd=m%20w`                 |
-| **Position Memory**  | `m pos X`    | Save position (X: 1-3)               | `http://<esp_ip>/command?cmd=m%20pos%201`           |
-|                      | `m save X`   | Load position (X: 1-3)               | `http://<esp_ip>/command?cmd=m%20save%201`          |
-| **Recording**        | `stream`     | Start recording                      | `http://<esp_ip>/command?cmd=stream`                |
-|                      | `done`       | Stop recording                       | `http://<esp_ip>/command?cmd=done`                  |
-|                      | `play`       | Play recording                       | `http://<esp_ip>/command?cmd=play`                  |
-|                      | `clear`      | Clear recording                      | `http://<esp_ip>/command?cmd=clear`                 |
-| **Obstacle Avoidance** | `oa on`    | Enable OA                            | `http://<esp_ip>/command?cmd=oa%20on`               |
-|                      | `oa off`     | Desable OA                           | `http://<esp_ip>/command?cmd=oa%20off`              |
-|                      | `oa nav`     | Auto navigation using OA             | `http://<esp_ip>/command?cmd=oa%20nav`              |
+| **Category**          | **Command**  | **Description**                      | **Example Usage**                                   |
+|-----------------------|--------------|---------------------------------------|----------------------------------------------------|
+| **Body Movement**      | `mv`         | Move forward                          | `http://<esp_ip>/command?cmd=mv`                   |
+|                       | `bk`         | Move backward                         | `http://<esp_ip>/command?cmd=bk`                   |
+|                       | `lt`         | Turn left                             | `http://<esp_ip>/command?cmd=lt`                   |
+|                       | `rt`         | Turn right                            | `http://<esp_ip>/command?cmd=rt`                   |
+|                       | `rl`         | Rotate left                           | `http://<esp_ip>/command?cmd=rl`                   |
+|                       | `rr`         | Rotate right                          | `http://<esp_ip>/command?cmd=rr`                   |
+|                       | `st`         | Stop                                  | `http://<esp_ip>/command?cmd=st`                   |
+|                       | `spd X`      | Set speed (X: 0-255)                  | `http://<esp_ip>/command?cmd=spd%20150`            |
+| **Arm Movement**       | `b +/-`      | Base rotation                         | `http://<esp_ip>/command?cmd=b%20+` or `cmd=b%20-` |
+|                       | `s +/-`      | Shoulder movement                     | `http://<esp_ip>/command?cmd=s%20+` or `cmd=s%20-` |
+|                       | `e +/-`      | Elbow movement                        | `http://<esp_ip>/command?cmd=e%20+` or `cmd=e%20-` |
+|                       | `g o/c`      | Gripper open (`o`) / close (`c`)      | `http://<esp_ip>/command?cmd=g%20o` or `cmd=g%20c` |
+| **Pre-defined Movements** | `m h`    | Home position                         | `http://<esp_ip>/command?cmd=m%20h`                |
+|                       | `m s`        | Scan position                         | `http://<esp_ip>/command?cmd=m%20s`                |
+|                       | `m p`        | Pick object                           | `http://<esp_ip>/command?cmd=m%20p`                |
+|                       | `m d`        | Drop object                           | `http://<esp_ip>/command?cmd=m%20d`                |
+|                       | `m w`        | Wave                                  | `http://<esp_ip>/command?cmd=m%20w`                |
+| **Position Memory**    | `m pos X`    | Save position (X: 1-3)                | `http://<esp_ip>/command?cmd=m%20pos%201`          |
+|                       | `m save X`   | Load position (X: 1-3)                | `http://<esp_ip>/command?cmd=m%20save%201`         |
+| **Recording**          | `stream`     | Start recording                       | `http://<esp_ip>/command?cmd=stream`               |
+|                       | `done`       | Stop recording                        | `http://<esp_ip>/command?cmd=done`                 |
+|                       | `play`       | Play recording                        | `http://<esp_ip>/command?cmd=play`                 |
+|                       | `clear`      | Clear recording                       | `http://<esp_ip>/command?cmd=clear`                |
+| **Obstacle Avoidance** | `oa on`      | Enable OA                             | `http://<esp_ip>/command?cmd=oa%20on`              |
+|                       | `oa off`     | Disable OA                            | `http://<esp_ip>/command?cmd=oa%20off`             |
+|                       | `oa nav`     | Auto navigation using OA              | `http://<esp_ip>/command?cmd=oa%20nav`             |
 
 ## User Interface
 
