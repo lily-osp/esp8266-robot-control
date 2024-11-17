@@ -1,6 +1,6 @@
-# ESP8266 Robot Control with Web Interface
+# Robot Control with Web Interface
 
-This project enables control of a robot with obstacle avoidance and a robot arm through a web interface using an ESP8266. The controller connects to Wi-Fi and accepts HTTP commands to manage the motor, robot arm, and sensors.
+This project enables control of a robot with obstacle avoidance and a robot arm through a web interface using an ESP8266/esp32. The controller connects to Wi-Fi and accepts HTTP commands to manage the motor, robot arm, and sensors.
 
 ## Features
 
@@ -47,7 +47,7 @@ This project enables control of a robot with obstacle avoidance and a robot arm 
 
 ## Hardware Requirements
 
-- **ESP8266 (NodeMCU or similar)**
+- **ESP8266 (NodeMCU or similar)** or **ESP32**
 - **Motor Driver (L298N recommended)**
 - **Ultrasonic Sensor (HC-SR04)**
 - **Servos (for robot arm joints and gripper)**
@@ -55,40 +55,77 @@ This project enables control of a robot with obstacle avoidance and a robot arm 
 
 ## Pin Configuration
 
-Below is the ESP8266 GPIO setup for controlling motors, an ultrasonic sensor, and a robot arm. This includes alternative pin aliases often found on NodeMCU boards, such as `SD2`, `SD3`, `SD_CLK`, and `SD_CMD`.
+The table below lists the GPIO configurations for ESP8266 and ESP32. The board selector in the code (`bool isESP32`) should be set to `true` for ESP32 and `false` for ESP8266.
+
 
 ### Motor Controller Pins
 
-| Component             | Board Pin | GPIO   | NodeMCU Alias | Description                           |
-|-----------------------|-----------|--------|---------------|---------------------------------------|
-| Motor 1 IN1           | D1        | GPIO5  | D1            | Motor 1 Direction Control Pin 1       |
-| Motor 1 IN2           | D2        | GPIO4  | D2            | Motor 1 Direction Control Pin 2       |
-| Motor 2 IN1           | D3        | GPIO0  | D3            | Motor 2 Direction Control Pin 1       |
-| Motor 2 IN2           | D4        | GPIO2  | D4            | Motor 2 Direction Control Pin 2       |
-| Motor 1 Enable (ENA)  | D5        | GPIO14 | D5            | PWM pin for Motor 1 speed control     |
-| Motor 2 Enable (ENB)  | D6        | GPIO12 | D6            | PWM pin for Motor 2 speed control     |
+| Component             | ESP8266 GPIO | ESP8266 Alias | ESP32 GPIO | ESP32 Alias | Description                           |
+|-----------------------|--------------|---------------|------------|-------------|---------------------------------------|
+| Motor 1 IN1           | GPIO5        | D1            | GPIO25     | IO25        | Motor 1 Direction Control Pin 1       |
+| Motor 1 IN2           | GPIO4        | D2            | GPIO26     | IO26        | Motor 1 Direction Control Pin 2       |
+| Motor 2 IN1           | GPIO0        | D3            | GPIO27     | IO27        | Motor 2 Direction Control Pin 1       |
+| Motor 2 IN2           | GPIO2        | D4            | GPIO14     | IO14        | Motor 2 Direction Control Pin 2       |
+| Motor 1 Enable (ENA)  | GPIO14       | D5            | GPIO12     | IO12        | PWM pin for Motor 1 speed control     |
+| Motor 2 Enable (ENB)  | GPIO12       | D6            | GPIO13     | IO13        | PWM pin for Motor 2 speed control     |
+
 
 ### Ultrasonic Sensor Pins
 
-| Component             | Board Pin | GPIO   | NodeMCU Alias | Description                           |
-|-----------------------|-----------|--------|---------------|---------------------------------------|
-| Trigger Pin           | D7        | GPIO13 | D7            | Trigger for distance measurement      |
-| Echo Pin              | D8        | GPIO15 | D8            | Echo to receive distance              |
+| Component             | ESP8266 GPIO | ESP8266 Alias | ESP32 GPIO | ESP32 Alias | Description                           |
+|-----------------------|--------------|---------------|------------|-------------|---------------------------------------|
+| Trigger Pin           | GPIO13       | D7            | GPIO32     | IO32        | Trigger for distance measurement      |
+| Echo Pin              | GPIO15       | D8            | GPIO33     | IO33        | Echo to receive distance              |
+
 
 ### Robot Arm Pins
 
-| Component             | Board Pin | GPIO   | NodeMCU Alias | Description                           |
-|-----------------------|-----------|--------|---------------|---------------------------------------|
-| Base Servo            | D0        | GPIO16 | D0            | Base rotation control                 |
-| Shoulder Servo        | RX        | GPIO3  | RX            | Shoulder joint control (ESP8266 RX)   |
-| Elbow Servo           | TX        | GPIO1  | TX            | Elbow joint control (ESP8266 TX)      |
-| Gripper Servo         | Flash     | GPIO9  | SD2 / S2      | Gripper open/close control            |
+| Component             | ESP8266 GPIO | ESP8266 Alias | ESP32 GPIO | ESP32 Alias | Description                           |
+|-----------------------|--------------|---------------|------------|-------------|---------------------------------------|
+| Base Servo            | GPIO16       | D0            | GPIO17     | IO17        | Base rotation control                 |
+| Shoulder Servo        | GPIO3 (RX)   | RX            | GPIO18     | IO18        | Shoulder joint control                |
+| Elbow Servo           | GPIO1 (TX)   | TX            | GPIO19     | IO19        | Elbow joint control                   |
+| Gripper Servo         | GPIO9        | SD2 / S2      | GPIO21     | IO21        | Gripper open/close control            |
 
-**Additional Pins and Notes:**
-- **SD2 (GPIO9)** and **SD3 (GPIO10)** are typically connected to the flash memory. Use them with caution, as these can interfere with flash operations.
-- **SD_CLK (GPIO6)**, **SD_CMD (GPIO11)**, **SD_DATA0-3 (GPIO7-10)**: Reserved for internal flash operations on most boards, so avoid using these for general I/O.
 
-**Note**: UART pins (D9, D10, D11) are used for serial communication, which might conflict with debugging output if connected to other peripherals.
+### Notes:
+
+- **Aliases for ESP8266**: NodeMCU board pins (e.g., D1, D2) map to ESP8266 GPIO pins.
+- **Aliases for ESP32**: Use `IO` followed by the GPIO number as a naming convention.
+- **Special Pins**: GPIO9 (SD2 on ESP8266) and GPIO10 (SD3) are typically used for flash operations on ESP8266. Use these cautiously.
+- **PWM on ESP32**: ESP32 supports multiple PWM channels, improving servo control and motor speed adjustment.
+- **UART Pins**: Be aware of RX/TX pins (`GPIO3` and `GPIO1`) if used for debugging or communication.
+
+Ensure proper power supply and grounding to avoid performance issues or damage to the components.
+
+**Additional Notes for ESP32**:
+- The ESP32 supports more PWM channels and higher resolution, allowing smoother servo movements.
+- Ensure pins for `Trigger` and `Echo` are free from internal pull-ups or pull-downs to avoid conflicts with the ultrasonic sensor.
+
+**Wi-Fi and mDNS**:
+- The project includes mDNS support for both ESP8266 and ESP32, allowing access to the web interface using the hostname `http://serbot.local`.
+
+## Code Modifications for Board Selection
+
+- In the source code, ensure the following line is updated based on the board in use:
+
+  ```cpp
+  bool isESP32 = true;  // Set to true for ESP32, false for ESP8266
+  ```
+
+This boolean configures the correct pin definitions and initializes the appropriate libraries for the selected board.
+
+## Quick Start
+
+1. Connect the hardware as per the pin configuration table.
+2. Flash the code to the selected board.
+3. Access the web interface via `http://serbot.local` once the device connects to Wi-Fi.
+
+## Troubleshooting
+
+- **Connection Issues**: Ensure Wi-Fi credentials are correctly configured, and the board is within range.
+- **Servo Jitters**: Use a stable power supply for motors and servos, especially with ESP32 where higher currents may be drawn.
+```
 
 #### GPIO images
 

@@ -1,6 +1,11 @@
-#include <ESP8266WiFi.h>
+#include <WiFi.h>
+#ifdef ESP32
+#include <WebServer.h>
+#include <ESPmDNS.h>
+#else
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
+#endif
 #include "MotorController.h"
 #include "UltrasonicSensor.h"
 #include "ObstacleAvoidance.h"
@@ -11,19 +16,37 @@
 const char* ssid = "SSID";
 const char* password = "password";
 
-// pin definitions for ESP8266
-const uint8_t MOTOR1_IN1 = 5;  // GPIO5
-const uint8_t MOTOR1_IN2 = 4;  // GPIO4
-const uint8_t MOTOR2_IN1 = 0;  // GPIO0
-const uint8_t MOTOR2_IN2 = 2;  // GPIO2
-const uint8_t MOTOR1_ENA = 14; // GPIO14 (PWM capable)
-const uint8_t MOTOR2_ENB = 12; // GPIO12 (PWM capable)
-const uint8_t TRIG_PIN = 13;   // GPIO13
-const uint8_t ECHO_PIN = 15;   // GPIO15
-const uint8_t BASE_PIN = 16;   // GPIO16
+// Board selector: true for ESP32, false for ESP8266
+const bool isESP32 = true;
+
+// Pin definitions
+#if isESP32
+const uint8_t MOTOR1_IN1 = 5;   // GPIO5
+const uint8_t MOTOR1_IN2 = 4;   // GPIO4
+const uint8_t MOTOR2_IN1 = 18;  // GPIO18
+const uint8_t MOTOR2_IN2 = 19;  // GPIO19
+const uint8_t MOTOR1_ENA = 32;  // GPIO32 (PWM capable)
+const uint8_t MOTOR2_ENB = 33;  // GPIO33 (PWM capable)
+const uint8_t TRIG_PIN = 25;    // GPIO25
+const uint8_t ECHO_PIN = 26;    // GPIO26
+const uint8_t BASE_PIN = 27;    // GPIO27
+const uint8_t SHOULDER_PIN = 14; // GPIO14
+const uint8_t ELBOW_PIN = 12;   // GPIO12
+const uint8_t GRIPPER_PIN = 13; // GPIO13
+#else
+const uint8_t MOTOR1_IN1 = 5;   // GPIO5
+const uint8_t MOTOR1_IN2 = 4;   // GPIO4
+const uint8_t MOTOR2_IN1 = 0;   // GPIO0
+const uint8_t MOTOR2_IN2 = 2;   // GPIO2
+const uint8_t MOTOR1_ENA = 14;  // GPIO14 (PWM capable)
+const uint8_t MOTOR2_ENB = 12;  // GPIO12 (PWM capable)
+const uint8_t TRIG_PIN = 13;    // GPIO13
+const uint8_t ECHO_PIN = 15;    // GPIO15
+const uint8_t BASE_PIN = 16;    // GPIO16
 const uint8_t SHOULDER_PIN = 3; // GPIO3 (RX)
-const uint8_t ELBOW_PIN = 1;   // GPIO1 (TX)
-const uint8_t GRIPPER_PIN = 9; // GPIO9 (flash)
+const uint8_t ELBOW_PIN = 1;    // GPIO1 (TX)
+const uint8_t GRIPPER_PIN = 9;  // GPIO9 (flash)
+#endif
 
 // Initialize objects
 MotorController motors(MOTOR1_IN1, MOTOR1_IN2, MOTOR2_IN1, MOTOR2_IN2, MOTOR1_ENA, MOTOR2_ENB);
@@ -32,19 +55,22 @@ ObstacleAvoidance oa(&motors, &sensor);
 RobotArm arm(BASE_PIN, SHOULDER_PIN, ELBOW_PIN, GRIPPER_PIN);
 
 // Web server setup
+#ifdef ESP32
+WebServer server(80);
+#else
 ESP8266WebServer server(80);
+#endif
 
 void handleRoot() {
-    server.send(200, "text/html", htmlContent);  // HTML interface
+    server.send(200, "text/html", htmlContent);
 }
 
 void handleCommand() {
-    String cmd = server.arg("cmd");  // Command from web interface
-    executeCommand(cmd);             // Execute the received command
+    String cmd = server.arg("cmd");
+    executeCommand(cmd);
     server.send(200, "text/plain", "Command received: " + cmd);
 }
 
-// Execute command based on the received cmd string
 void executeCommand(String command) {
     if (command == "mv") { motors.moveForward(); }
     else if (command == "bk") { motors.moveBackward(); }
@@ -130,7 +156,13 @@ void setup() {
         delay(1000);
     }
     Serial.println("Connected to WiFi. IP: " + WiFi.localIP().toString());
-    MDNS.begin("serbot");
+
+    // Setup mDNS
+    if (MDNS.begin("serbot")) {
+        Serial.println("mDNS responder started");
+    } else {
+        Serial.println("Error setting up mDNS responder!");
+    }
 
     // Setup web server endpoints
     server.on("/", handleRoot);
@@ -141,6 +173,6 @@ void setup() {
 void loop() {
     server.handleClient();
     if (oa.isActive()) {
-        oa.check();  // Continuously check for obstacles if OA is active
+        oa.check();
     }
 }
