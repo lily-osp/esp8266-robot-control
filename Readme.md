@@ -10,6 +10,8 @@ This project enables control of a robot with obstacle avoidance and a robot arm 
 - **Robot Arm Control**: Manage various robotic arm movements, including a gripper, base rotation, and joint movements.
 - **Configurable Speed**: Set motor speed through the web interface.
 - **Position Management**: Save and execute robot arm positions, along with predefined actions like scanning, picking, and waving.
+- **Motor Control**: Forward, backward, turn, and stop commands.
+- **mDNS Support**: Access the device using a hostname (e.g., `http://serbot.local`).
 
 ### Parts
 
@@ -125,7 +127,6 @@ This boolean configures the correct pin definitions and initializes the appropri
 
 - **Connection Issues**: Ensure Wi-Fi credentials are correctly configured, and the board is within range.
 - **Servo Jitters**: Use a stable power supply for motors and servos, especially with ESP32 where higher currents may be drawn.
-```
 
 #### GPIO images
 
@@ -133,41 +134,62 @@ This boolean configures the correct pin definitions and initializes the appropri
 
 ## Software Requirements
 
-- **Arduino IDE** with ESP8266 support
+- **Arduino IDE** with ESP8266 and ESP32 support.
 - **Libraries**:
-  - `ESP8266WiFi.h`: For Wi-Fi connectivity
-  - `ESP8266WebServer.h`: For creating the HTTP server
-  - Custom libraries for `MotorController`, `UltrasonicSensor`, `ObstacleAvoidance`, and `RobotArm` (provided in the codebase)
+  - `WiFi.h`: For Wi-Fi connectivity (ESP32).
+  - `ESP8266WiFi.h`: For Wi-Fi connectivity (ESP8266).
+  - `WebServer.h` (ESP32) or `ESP8266WebServer.h` (ESP8266): For creating the HTTP server.
+  - `ESPmDNS.h` or `ESP8266mDNS.h`: For mDNS service.
+
+## Hardware Requirements
+
+- **Microcontroller**: ESP8266 or ESP32.
+- **Motors and Driver**: L298N or similar motor driver.
+- **Ultrasonic Sensor**: HC-SR04 or similar.
+- **Servos**: For robotic arm control.
+- **Power Supply**: Compatible with the microcontroller and motors/servos.
 
 ## Setup Instructions
 
-1. **Clone Repository**:
-   ```bash
-   git clone https://github.com/lily-osp/esp8266-robot-control.git
-   cd esp8266-robot-control
-   ```
+### 1. Clone Repository
+```bash
+git clone https://github.com/lily-osp/esp-robot-control.git
+cd esp-robot-control
+```
 
-2. **Install Libraries**: Ensure the required libraries are installed in the Arduino IDE.
+### 2. Select Your Board
+Set the `isESP32` boolean in the code to match your board:
+- `true` for ESP32
+- `false` for ESP8266
+  
+  ```cpp
+  const bool isESP32 = true; // Set to false if using ESP8266
+  ```
 
-3. **Configure Wi-Fi**:
-   - Open `main.ino` in the Arduino IDE.
-   - Replace `ssid` and `password` with your Wi-Fi credentials.
-    ```cpp
-    const char* ssid = "YOUR_WIFI_SSID";
-    const char* password = "YOUR_WIFI_PASSWORD";
-    ```
+### 3. Install Libraries
+Ensure the required libraries are installed in the Arduino IDE:
+1. Open Arduino IDE.
+2. Install **ESP8266** or **ESP32** boards via the Board Manager.
+3. Install additional libraries via the Library Manager.
 
-4. **Upload the Code**:
-   - Connect the ESP8266 to your computer.
-   - Upload the code to the ESP8266 through the Arduino IDE.
+### 4. Configure Wi-Fi
+Update the `ssid` and `password` in the code with your Wi-Fi credentials:
+```cpp
+const char* ssid = "YOUR_WIFI_SSID";
+const char* password = "YOUR_WIFI_PASSWORD";
+```
 
-5. **Connect the Hardware**:
-   - Wire up the components based on the pinout tables above.
-   - Use a power supply compatible with the ESP8266 and motors/servos.
+### 5. Upload the Code
+1. Connect your ESP8266/ESP32 to your computer via USB.
+2. Select the appropriate board and port in the Arduino IDE.
+3. Upload the code.
 
-6. **Access the Web Interface**:
-   - After uploading, open the Serial Monitor to see the assigned IP address.
-   - Open a web browser and enter the ESP8266’s IP to access the control interface.
+### 6. Connect the Hardware
+Wire the components to your microcontroller as per the pin definitions in the code.
+
+### 7. Access the Web Interface
+1. Open the Serial Monitor to find the assigned IP address.
+2. Open a web browser and enter the IP to access the control interface.
 
 ## Web Interface and Commands
 
