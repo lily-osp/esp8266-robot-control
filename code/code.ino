@@ -1,5 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
+#include <ESP8266mDNS.h>
 #include "MotorController.h"
 #include "UltrasonicSensor.h"
 #include "ObstacleAvoidance.h"
@@ -129,6 +130,7 @@ void setup() {
         delay(1000);
     }
     Serial.println("Connected to WiFi. IP: " + WiFi.localIP().toString());
+    MDNS.begin("serbot");
 
     // Setup web server endpoints
     server.on("/", handleRoot);
