@@ -88,7 +88,7 @@ void executeCommand(String command) {
     else if (command == "oa nav") { startNavigationMode(); }
     else if (command == "dist") {
         float distance = sensor.getFilteredDistance(5);
-        Serial.println("Distance: " + String(distance) + " cm");  // Send feedback to serial for testing
+        Serial.println("Distance: " + String(distance) + " cm"); 
     }
     else if (command == "stream") { arm.startRecording(); }
     else if (command.length() >= 3) { handleArmCommands(command); }
